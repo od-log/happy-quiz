@@ -1,6 +1,6 @@
 export const ROUTE_PATH = {
   HOME: "/",
-  QUIZ: "/quiz",
+  QUIZ: "/quiz/:qId",
   RESULT: "/result",
   IMPROVE_NOTE: "/note",
   NOT_FOUND: "*",

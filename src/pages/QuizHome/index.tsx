@@ -1,8 +1,12 @@
 import { Layout } from "@src/components";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const QuizHome = () => {
-  const onQuizStart = (e: React.MouseEvent<HTMLButtonElement>) => {};
+  const navigate = useNavigate();
+  const onQuizStart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate("quiz/0");
+  };
 
   return (
     <Layout>
