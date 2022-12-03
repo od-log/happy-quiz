@@ -1,12 +1,13 @@
+import {
+  ENCODING,
+  QUIZ_ANSWER_TYPE,
+  QUIZ_CATEGORY,
+  QUIZ_COUNT,
+  QUIZ_DIFFICULTY,
+} from "@src/constants.ts";
 import { QuizResponse, Quiz } from "../types/api";
 import { httpMehthod } from "./common";
 import requester from "./requester";
-
-const QUIZ_COUNT = 15;
-const QUIZ_CATEGORY = { COMPUTER: 18 };
-const QUIZ_DIFFICULTY = "easy";
-const QUIZ_ANSWER_TYPE = "multiple";
-const ENCODING = "base64";
 
 export const getQuizList = async () => {
   const { headers, status, payload } = await requester<QuizResponse>({
