@@ -10,7 +10,7 @@ const ChartPie = ({ correctCount, wrongCount }: Props) => {
     { name: "오답", value: wrongCount },
   ];
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#00C49F", "#808080"];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -19,6 +19,7 @@ const ChartPie = ({ correctCount, wrongCount }: Props) => {
     midAngle,
     innerRadius,
     outerRadius,
+    percent,
     index,
   }: {
     cx: number;
@@ -46,11 +47,11 @@ const ChartPie = ({ correctCount, wrongCount }: Props) => {
     );
   };
   return (
-    <PieChart width={400} height={400}>
+    <PieChart width={200} height={200}>
       <Pie
         data={data}
-        cx={200}
-        cy={200}
+        cx={100}
+        cy={100}
         labelLine={false}
         label={renderCustomizedLabel}
         outerRadius={80}
