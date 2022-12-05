@@ -1,31 +1,33 @@
-import { getQuizList } from "@src/apis/quiz";
-import { Layout } from "@src/components";
-import { Quiz, QuizResponse } from "@src/types/api";
-import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { CardLayout } from "@src/components";
+import CardHeader from "@mui/material/CardHeader";
+import Answer from "@src/components/Answer";
+import useQuiz from "@src/hooks/useQuiz";
 
 const QuizPage = () => {
-  const { data: quizList } = useQuery<Quiz[]>(
-    ["getQuizList"],
-    async () => getQuizList(),
-    { staleTime: 1000 * 60 * 60 }
-  );
-  console.log(quizList);
+  const { quizList } = useQuiz();
+  const { qId } = useParams();
+
   return (
-    <Layout>
-      <>
+    <CardLayout>
+      <CardHeader>
         <div>퀴즈</div>
-        {Array.isArray(quizList) &&
-          quizList.map((item, index) => {
-            return (
-              <div key={item.correct_answer}>
-                <div key={item.correct_answer}>{atob(item.question)}</div>
-                <div>{item.incorrect_answers}</div>
-                <div>{atob(item.correct_answer)}</div>
-              </div>
-            );
-          })}
-      </>
-    </Layout>
+      </CardHeader>
+
+      {Array.isArray(quizList) && (
+        <div key={quizList[Number(qId)].correct_answer}>
+          <div>
+            {qId}
+            {window.atob(quizList[Number(qId)].question)}
+          </div>
+          <Answer
+            data={quizList[Number(qId)].answerList}
+            correctAnswer={quizList[Number(qId)].correct_answer}
+            qId={qId}
+          />
+        </div>
+      )}
+    </CardLayout>
   );
 };
 
