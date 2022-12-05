@@ -1,11 +1,8 @@
 import React, { PropsWithChildren } from "react";
+import Card from "@mui/material/Card";
 
 const Layout = (props: PropsWithChildren) => {
-  return (
-    <section className="flex justify-center items-center border-2">
-      {props.children}
-    </section>
-  );
+  return <Card variant="outlined">{props.children}</Card>;
 };
 
 export default Layout;
