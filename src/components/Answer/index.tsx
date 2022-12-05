@@ -77,9 +77,12 @@ const Answer = ({ data, correctAnswer, qId }: Props) => {
           location.state !== "note" && (
             <button onClick={handleNextClick}>다음</button>
           )}
-        {qId && Number(qId) === QUIZ_COUNT - 1 && location.state !== "note" && (
-          <button onClick={handleResultClick}>퀴즈 결과 보기</button>
-        )}
+        {selected &&
+          qId &&
+          Number(qId) === QUIZ_COUNT - 1 &&
+          location.state !== "note" && (
+            <button onClick={handleResultClick}>퀴즈 결과 보기</button>
+          )}
         {location.state === "note" && (
           <button onClick={() => navigate("/note")}>오답 노트 보기</button>
         )}
