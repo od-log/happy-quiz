@@ -23,6 +23,8 @@
 #### 테스트
 테스트 대상으로 선정한 사유
 
+### 시연 영상
+![KakaoTalk_20221206_023659538](https://user-images.githubusercontent.com/40523487/205705099-78b106b9-7a2a-49ce-854f-d1bfce07510f.gif)
 
 ### 배포주소
 https://willowy-cranachan-565a58.netlify.app/
