@@ -1,8 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CardLayout } from "@src/components";
-import CardHeader from "@mui/material/CardHeader";
 import Answer from "@src/components/Answer";
 import useQuiz from "@src/hooks/useQuiz";
+import { CardContent } from "@mui/material";
+import * as S from "./styled";
 
 const QuizPage = () => {
   const { quizList } = useQuiz();
@@ -10,22 +11,19 @@ const QuizPage = () => {
 
   return (
     <CardLayout>
-      <CardHeader>
-        <div>퀴즈</div>
-      </CardHeader>
-
       {Array.isArray(quizList) && (
-        <div key={quizList[Number(qId)].correct_answer}>
-          <div>
-            {qId}
-            {window.atob(quizList[Number(qId)].question)}
-          </div>
+        <CardContent key={quizList[Number(qId)].correct_answer}>
+          <S.Question>
+            {`${Number(qId) + 1}. ${window.atob(
+              quizList[Number(qId)].question
+            )}`}
+          </S.Question>
           <Answer
             data={quizList[Number(qId)].answerList}
             correctAnswer={quizList[Number(qId)].correct_answer}
             qId={qId}
           />
-        </div>
+        </CardContent>
       )}
     </CardLayout>
   );

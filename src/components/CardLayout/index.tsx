@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from "react";
-import Card from "@mui/material/Card";
+import { PropsWithChildren } from "react";
+import { Card } from "./styled";
 
 const Layout = (props: PropsWithChildren) => {
-  return <Card variant="outlined">{props.children}</Card>;
+  return <Card>{props.children}</Card>;
 };
 
 export default Layout;

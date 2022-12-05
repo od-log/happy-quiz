@@ -1,6 +1,7 @@
 import { CardLayout } from "@src/components";
 import { Answer } from "@src/types/storage";
 import { useNavigate } from "react-router-dom";
+import * as S from "./styled";
 
 const ImproveNote = () => {
   const navigate = useNavigate();
@@ -14,18 +15,19 @@ const ImproveNote = () => {
 
   return (
     <CardLayout>
-      <h2>오답 노트</h2>
+      <S.Title>오답 노트</S.Title>
       <ul>
         {wrongQuizList &&
           wrongQuizList.map((item, index) => {
             return (
-              <li
+              <S.HoverBox
                 onClick={() =>
                   navigate(`/quiz/${Number(item)}`, { state: "note" })
                 }
+                key={item}
               >
                 {Number(item) + 1}번 문제 확인하기
-              </li>
+              </S.HoverBox>
             );
           })}
       </ul>

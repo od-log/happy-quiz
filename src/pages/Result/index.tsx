@@ -1,9 +1,8 @@
 import { CardLayout } from "@src/components";
-import CardHeader from "@mui/material/CardHeader";
 import { QUIZ_COUNT } from "@src/constants.ts";
 import ChartPie from "@src/components/ChartPie";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import * as S from "./styled";
 
 const Result = () => {
   const navigate = useNavigate();
@@ -23,16 +22,21 @@ const Result = () => {
 
   return (
     <CardLayout>
-      <CardHeader>퀴즈 결과</CardHeader>
-      <dt>소요 시간</dt>
-      <dd>{Math.floor(quizMillis / 1000)}초</dd>
-      <dt>정답 개수</dt>
-      <dd>{correctCount}개</dd>
-      <dt>오답 개수</dt>
-      <dd>{wrongCount} 개</dd>
-      <div>차트</div>
+      <S.Title>퀴즈 결과</S.Title>
+      <S.FlexBox>
+        <dt>소요 시간</dt>
+        <dd>{Math.floor(quizMillis / 1000)}초</dd>
+      </S.FlexBox>
+      <S.FlexBox>
+        <dt>정답 개수</dt>
+        <dd>{correctCount}개</dd>
+      </S.FlexBox>
+      <S.FlexBox>
+        <dt>오답 개수</dt>
+        <dd>{wrongCount} 개</dd>
+      </S.FlexBox>
       <ChartPie correctCount={correctCount} wrongCount={wrongCount} />
-      <Button onClick={() => navigate(`/note`)}>오답 노트 보러 가기</Button>
+      <button onClick={() => navigate(`/note`)}>오답 노트 보러 가기</button>
     </CardLayout>
   );
 };
