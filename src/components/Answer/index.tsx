@@ -1,8 +1,7 @@
 import { QUIZ_COUNT } from "@src/constants.ts";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import useAnswerStore from "@src/zustand/useAnswerStore";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as S from "./styled";
 
 type Props = {
   data: string[] | undefined;
@@ -12,6 +11,7 @@ type Props = {
 
 const Answer = ({ data, correctAnswer, qId }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [answers, setAnswers] = useState<{
     [k: string]: { selectedAnswer: string; mark: string };
   }>();
@@ -19,6 +19,9 @@ const Answer = ({ data, correctAnswer, qId }: Props) => {
   let newAnswerObj: { [k: string]: { selectedAnswer: string; mark: string } } =
     {};
   if (answerObj) newAnswerObj = JSON.parse(answerObj);
+  const [selected, setSelected] = useState(
+    qId && newAnswerObj[qId]?.selectedAnswer
+  );
 
   useEffect(() => {
     setAnswers(newAnswerObj);
@@ -26,9 +29,9 @@ const Answer = ({ data, correctAnswer, qId }: Props) => {
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (newAnswerObj.qId) return;
+    if (qId && newAnswerObj[qId]) return;
     let selectedAnswer = e.currentTarget.innerHTML;
-
+    setSelected(e.currentTarget.innerHTML);
     if (window.atob(correctAnswer) === selectedAnswer && qId) {
       newAnswerObj[qId] = { selectedAnswer: selectedAnswer, mark: "true" };
       localStorage.setItem("answerObj", JSON.stringify(newAnswerObj));
@@ -53,22 +56,31 @@ const Answer = ({ data, correctAnswer, qId }: Props) => {
       {Array.isArray(data) &&
         data.map((item: string, index: number) => {
           return (
-            <div key={item} onClick={handleClick} data-index={index}>
+            <S.Example
+              key={item}
+              onClick={handleClick}
+              clicked={window.atob(item) === selected}
+              correct={
+                selected !== undefined &&
+                window.atob(item) === window.atob(correctAnswer)
+              }
+            >
               {window.atob(item)}
-            </div>
+            </S.Example>
           );
         })}
-      {answers && qId && answers[qId].mark === "true" && <div>정답입니다</div>}
-      {answers && qId && answers[qId].mark === "false" && <div>틀렸습니다</div>}
-      {qId && Number(qId) < QUIZ_COUNT - 1 ? (
-        <Button variant="contained" onClick={handleNextClick}>
-          다음
-        </Button>
-      ) : (
-        <Button variant="contained" onClick={handleResultClick}>
-          결과 보기
-        </Button>
-      )}
+
+      <S.ButtonArea>
+        {qId && Number(qId) < QUIZ_COUNT - 1 && location.state !== "note" && (
+          <button onClick={handleNextClick}>다음</button>
+        )}
+        {qId && Number(qId) === QUIZ_COUNT - 1 && location.state !== "note" && (
+          <button onClick={handleResultClick}>퀴즈 결과 보기</button>
+        )}
+        {location.state === "note" && (
+          <button onClick={() => navigate("/note")}>오답 노트 보기</button>
+        )}
+      </S.ButtonArea>
     </>
   );
 };
