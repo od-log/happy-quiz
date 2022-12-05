@@ -71,9 +71,12 @@ const Answer = ({ data, correctAnswer, qId }: Props) => {
         })}
 
       <S.ButtonArea>
-        {qId && Number(qId) < QUIZ_COUNT - 1 && location.state !== "note" && (
-          <button onClick={handleNextClick}>다음</button>
-        )}
+        {selected &&
+          qId &&
+          Number(qId) < QUIZ_COUNT - 1 &&
+          location.state !== "note" && (
+            <button onClick={handleNextClick}>다음</button>
+          )}
         {qId && Number(qId) === QUIZ_COUNT - 1 && location.state !== "note" && (
           <button onClick={handleResultClick}>퀴즈 결과 보기</button>
         )}
